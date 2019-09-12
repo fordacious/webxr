@@ -273,6 +273,7 @@ The <dfn method for="XR">supportsSession(|mode|)</dfn> method queries if a given
 When this method is invoked, it MUST run the following steps:
 
   1. Let |promise| be [=a new Promise=].
+  1. If the requesting document's origin is not allowed to use the WebXR [[#feature-policy|feature policy]], [=reject=] |promise| with a "{{SecurityError}}" {{DOMException}} and abort these steps.
   1. If |mode| is {{XRSessionMode/"inline"}}, [=/resolve=] |promise| and return it.
   1. Run the following steps [=in parallel=]:
     1. [=ensures an immersive XR device is selected|Ensure an immersive XR device is selected=].
@@ -2206,7 +2207,7 @@ Integrations {#integrations}
 Feature Policy {#feature-policy}
 --------------
 
-This specification defines a [=policy-controlled feature=] that controls whether the {{Navigator/xr}} attribute is exposed on the {{Navigator}} object.
+This specification defines a [=policy-controlled feature=] that controls whether the any {{XRSession}}s may be returned by {{XR/requestSession()}} and whether {{XR/supportsSession()}} indicates that any session mode is supported.
 
 The feature identifier for this feature is <code>"xr"</code>.
 
